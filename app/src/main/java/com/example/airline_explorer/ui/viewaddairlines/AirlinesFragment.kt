@@ -15,6 +15,7 @@ import com.example.airline_explorer.data.source.remote.AirlinesRemoteDataSource
 import com.example.airline_explorer.data.source.remote.RetrofitClient
 import com.example.airline_explorer.databinding.FragmentAirlinesBinding
 import com.example.airline_explorer.util.NetworkConnectivityCheckerImpl
+import com.example.airline_explorer.util.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -60,17 +61,19 @@ class AirlinesFragment : Fragment(), AirlinesAdapter.AirlineItemClickListener {
 
         setupAirlinesRecyclerView();
 
+        viewModel.airlinesData.observe(viewLifecycleOwner, { airlinesList ->
+            airlinesAdapter.updateAirlines(airlinesList)
+            binding.progressBar.visibility = View.GONE
+        })
+
+        viewModel.messageEvent.observe(viewLifecycleOwner, { msgStrResId ->
+            showSnackbar(msgStrResId)
+        })
+
         binding.fabAddAirline.setOnClickListener { v ->
             Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.airlinesData.observe(this, { airlinesList ->
-            airlinesAdapter.updateAirlines(airlinesList)
-        })
     }
 
     private fun setupAirlinesRecyclerView() {
