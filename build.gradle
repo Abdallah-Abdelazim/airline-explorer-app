@@ -49,6 +49,17 @@ ext {
     // Navigation Architecture Component
     navigationVersion = "2.3.5"
 
+    // Retrofit
+    retrofitVersion = "2.9.0"
+    moshiVersion = "1.12.0"
+    okhttpVersion = "4.9.1"
+
+    // RxJava
+    rxjavaVersion = "3.0.13"
+    rxkotlinVersion = "3.0.1"
+    rxandroidVersion = "3.0.0"
+    rxjava3RetrofitAdapterVersion = "3.0.0"
+
     // Testing
     junitVersion = "4.13.2"
     androidXTestVersion = "1.1.2"
