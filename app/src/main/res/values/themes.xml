@@ -18,6 +18,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.Launcher" parent="Theme.AirlineExplorer.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:statusBarColor">?attr/colorSecondary</item>
+    </style>
+
     <style name="Theme.AirlineExplorer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Theme.AirlineExplorer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
