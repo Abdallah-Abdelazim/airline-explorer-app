@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.viewModels
 import com.example.airline_explorer.R
 import com.example.airline_explorer.databinding.FragmentAirlinesBinding
 import com.google.android.material.snackbar.Snackbar
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * A [Fragment] showing a list of airlines that can be filtered by airline name, airline ID
+ * or country. Also, it allow adding a new airline to the existing list.
  */
 class AirlinesFragment : Fragment() {
 
@@ -21,25 +23,28 @@ class AirlinesFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val viewModel by viewModels<AirlinesViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentAirlinesBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_airlines,
+            container, false
+        )
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_AirlinesFragment_to_AirlineDetailsFragment)
-        }
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
-        binding.fabAddAirline.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        binding.fabAddAirline.setOnClickListener { v ->
+            Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
     }

@@ -19,6 +19,8 @@
     </style>
 
     <style name="Theme.Launcher" parent="Theme.AirlineExplorer.NoActionBar">
+        <!-- Based on "Themed launch screens":
+                https://developer.android.com/topic/performance/vitals/launch-time#themed -->
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:statusBarColor">?attr/colorSecondary</item>
     </style>
