@@ -1,4 +1,4 @@
-package com.example.airline_explorer
+package com.example.airline_explorer.ui.viewaddairlines
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,14 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.airline_explorer.databinding.FragmentFirstBinding
+import com.example.airline_explorer.R
+import com.example.airline_explorer.databinding.FragmentAirlinesBinding
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class AirlinesFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentAirlinesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,7 +26,7 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentAirlinesBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -33,7 +35,12 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            findNavController().navigate(R.id.action_AirlinesFragment_to_AirlineDetailsFragment)
+        }
+
+        binding.fabAddAirline.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
         }
     }
 

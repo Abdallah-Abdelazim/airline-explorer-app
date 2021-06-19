@@ -1,4 +1,4 @@
-package com.example.airline_explorer
+package com.example.airline_explorer.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.airline_explorer.R
 import com.example.airline_explorer.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -31,12 +32,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            binding.tvActivityTitle.text = destination.label
-        }
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            binding.tvTitle.text = destination.label
         }
     }
 
