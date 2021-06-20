@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.airline_explorer.R
 import com.example.airline_explorer.data.model.Airline
 import com.example.airline_explorer.data.source.AirlinesRepository
@@ -16,7 +17,6 @@ import com.example.airline_explorer.data.source.remote.RetrofitClient
 import com.example.airline_explorer.databinding.FragmentAirlinesBinding
 import com.example.airline_explorer.util.NetworkConnectivityCheckerImpl
 import com.example.airline_explorer.util.showSnackbar
-import com.google.android.material.snackbar.Snackbar
 
 /**
  * A [Fragment] showing a list of airlines that can be filtered by airline name, airline ID
@@ -56,10 +56,10 @@ class AirlinesFragment : Fragment(), AirlinesAdapter.AirlineItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupAirlinesRecyclerView();
+
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
-        setupAirlinesRecyclerView();
 
         viewModel.airlinesData.observe(viewLifecycleOwner, { airlinesList ->
             airlinesAdapter.updateAirlines(airlinesList)
@@ -69,15 +69,13 @@ class AirlinesFragment : Fragment(), AirlinesAdapter.AirlineItemClickListener {
             showSnackbar(msgStrResId)
         })
 
-        viewModel.isLoadingEvent.observe(viewLifecycleOwner, { isLoading ->
-            if (isLoading) binding.progressBar.visibility = View.VISIBLE
-            else binding.progressBar.visibility = View.GONE
+        viewModel.airlineDetailsNavigationEvent.observe(viewLifecycleOwner, { airline ->
+            airline.id?.let {
+                val action = AirlinesFragmentDirections
+                    .actionAirlinesFragmentToAirlineDetailsFragment(it)
+                findNavController().navigate(action)
+            }
         })
-
-        binding.fabAddAirline.setOnClickListener { v ->
-            Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
     }
 
     private fun setupAirlinesRecyclerView() {
@@ -94,6 +92,7 @@ class AirlinesFragment : Fragment(), AirlinesAdapter.AirlineItemClickListener {
 
     override fun onAirlineItemClick(airline: Airline) {
         Log.d(TAG, "onAirlineItemClick: airline = $airline")
+        viewModel.openAirlineDetails(airline)
     }
 
     companion object {

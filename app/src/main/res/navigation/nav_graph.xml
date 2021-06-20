@@ -24,5 +24,10 @@
         android:id="@+id/AirlineDetailsFragment"
         android:name="com.example.airline_explorer.ui.airlinedetails.AirlineDetailsFragment"
         android:label="@string/airline_details_fragment_label"
-        tools:layout="@layout/fragment_airline_details" />
+        tools:layout="@layout/fragment_airline_details" >
+        <argument
+            android:name="airlineId"
+            app:argType="string"
+            android:defaultValue="null" />
+    </fragment>
 </navigation>

@@ -12,7 +12,7 @@ class AirlinesRemoteDataSource(private val airlinesService: AirlinesService) : A
     }
 
     override fun getAirline(id: String): Single<Airline> {
-        TODO("Not yet implemented")
+        return airlinesService.getAirlineData(id)
     }
 
     override fun addAirline(airline: Airline): Completable {

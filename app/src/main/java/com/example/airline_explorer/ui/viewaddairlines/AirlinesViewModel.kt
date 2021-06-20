@@ -14,19 +14,24 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class AirlinesViewModel(private val airlinesRepository: AirlinesRepository) : ViewModel() {
 
-    private val _airlinesData: MutableLiveData<List<Airline>> by lazy {
+    private val _airlinesData by lazy {
         MutableLiveData<List<Airline>>().also {
             loadAirlinesData()
         }
     }
     val airlinesData: LiveData<List<Airline>> get() = _airlinesData
 
+    private val _isLoadingEvent by lazy {
+        MutableLiveData<Boolean>()
+    }
+    val isLoadingEvent: LiveData<Boolean> get() = _isLoadingEvent
+
     val messageEvent by lazy {
         SingleLiveEvent<Int>()
     }
 
-    val isLoadingEvent by lazy {
-        SingleLiveEvent<Boolean>()
+    val airlineDetailsNavigationEvent by lazy {
+        SingleLiveEvent<Airline>()
     }
 
     private var airlinesLoadDisposable: Disposable? = null
@@ -34,7 +39,7 @@ class AirlinesViewModel(private val airlinesRepository: AirlinesRepository) : Vi
     private fun loadAirlinesData() {
         Log.d(TAG, "loadAirlinesData")
 
-        isLoadingEvent.value = true
+        _isLoadingEvent.value = true
 
         airlinesLoadDisposable = airlinesRepository.fetchAirlinesData()
             .subscribeOn(Schedulers.io())
@@ -47,12 +52,21 @@ class AirlinesViewModel(private val airlinesRepository: AirlinesRepository) : Vi
                     _airlinesData.value = airlinesList
                 }
 
-                isLoadingEvent.value = false
+                _isLoadingEvent.value = false
             }
     }
 
     fun filter(criteria: String?) {
         Log.d(TAG, "filter: criteria=$criteria")
+    }
+
+    fun openAirlineDetails(airline: Airline) {
+        if (airline.id == null) {
+            messageEvent.value = R.string.error_missing_airline_id
+            return
+        }
+
+        airlineDetailsNavigationEvent.value = airline
     }
 
     fun openAddAirlineDialog() {

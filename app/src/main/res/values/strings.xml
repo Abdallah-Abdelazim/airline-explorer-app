@@ -9,4 +9,10 @@
     <string name="input_hint_airline_search">Search by airline name, ID or country</string>
 
     <string name="error_network_request">An error occurred while fetching data!</string>
+    <string name="error_missing_airline_id">Cannot show this airline details (missing ID)!</string>
+    <string name="error_missing_airline_website">Cannot open this airline website (missing URL)!</string>
+    <string name="error_no_installed_browser">Please make sure you have a web browser installed!</string>
+    <string name="headquarters">Headquarters</string>
+    <string name="visit">Visit</string>
+
 </resources>
