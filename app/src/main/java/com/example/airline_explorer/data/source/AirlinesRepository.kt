@@ -1,6 +1,5 @@
 package com.example.airline_explorer.data.source
 
-import android.util.Log
 import com.example.airline_explorer.data.model.Airline
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -31,10 +30,8 @@ class AirlinesRepository(
         validateDataSources()
 
         return if (networkConnectivityChecker.isOnline()) {
-            Log.d(TAG, "Network status: ONLINE")
             (airlinesRemoteDataSource ?: airlinesLocalDataSource)!!
         } else {
-            Log.d(TAG, "Network status: OFFLINE")
             (airlinesLocalDataSource ?: airlinesRemoteDataSource)!!
         }
 
