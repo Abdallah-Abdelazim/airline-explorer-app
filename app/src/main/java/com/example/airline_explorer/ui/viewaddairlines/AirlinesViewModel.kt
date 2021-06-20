@@ -25,10 +25,16 @@ class AirlinesViewModel(private val airlinesRepository: AirlinesRepository) : Vi
         SingleLiveEvent<Int>()
     }
 
+    val isLoadingEvent by lazy {
+        SingleLiveEvent<Boolean>()
+    }
+
     private var airlinesLoadDisposable: Disposable? = null
 
     private fun loadAirlinesData() {
         Log.d(TAG, "loadAirlinesData")
+
+        isLoadingEvent.value = true
 
         airlinesLoadDisposable = airlinesRepository.fetchAirlinesData()
             .subscribeOn(Schedulers.io())
@@ -40,6 +46,8 @@ class AirlinesViewModel(private val airlinesRepository: AirlinesRepository) : Vi
                 } else {
                     _airlinesData.value = airlinesList
                 }
+
+                isLoadingEvent.value = false
             }
     }
 

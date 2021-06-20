@@ -63,11 +63,15 @@ class AirlinesFragment : Fragment(), AirlinesAdapter.AirlineItemClickListener {
 
         viewModel.airlinesData.observe(viewLifecycleOwner, { airlinesList ->
             airlinesAdapter.updateAirlines(airlinesList)
-            binding.progressBar.visibility = View.GONE
         })
 
         viewModel.messageEvent.observe(viewLifecycleOwner, { msgStrResId ->
             showSnackbar(msgStrResId)
+        })
+
+        viewModel.isLoadingEvent.observe(viewLifecycleOwner, { isLoading ->
+            if (isLoading) binding.progressBar.visibility = View.VISIBLE
+            else binding.progressBar.visibility = View.GONE
         })
 
         binding.fabAddAirline.setOnClickListener { v ->
