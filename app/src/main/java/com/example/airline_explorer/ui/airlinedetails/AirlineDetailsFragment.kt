@@ -56,11 +56,11 @@ class AirlineDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewModel.messageEvent.observe(viewLifecycleOwner, { msgStrResId ->
+        viewModel.messageEvent.observe(viewLifecycleOwner) { msgStrResId ->
             showSnackbar(msgStrResId)
-        })
+        }
 
-        viewModel.openWebsiteEvent.observe(viewLifecycleOwner, { website ->
+        viewModel.openWebsiteEvent.observe(viewLifecycleOwner) { website ->
             val url = if (!website.contains("http://") || !website.contains("https://"))
                 "http://$website"
             else website
@@ -73,7 +73,7 @@ class AirlineDetailsFragment : Fragment() {
                     showSnackbar(R.string.error_no_installed_browser)
                 }
             }
-        })
+        }
     }
 
     override fun onDestroyView() {
